@@ -10,6 +10,12 @@ CREATE TABLE reports (
     date TEXT
 );
 
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    email TEXT,
+    password TEXT
+);
+
 CREATE TABLE log_entries (
     id SERIAL PRIMARY KEY,
     report_id INT,
