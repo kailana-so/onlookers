@@ -3,28 +3,20 @@ if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config()
 }
 
-const  express = require('express');
+const express = require('express');
 const app = express();
 const port = 8080;
 const logger = require('./middlewares/logger.js');
 const appControllers = require('./controllers/appControllers.js');
 const bcrypt = require('bcrypt')
-const passport = require('passport')
 const flash = require('express-flash')
 const session = require('express-session')
 const methodOverride = require('method-override')
 
-const initializePassport = require('./passport-config');
-initializePassport(
-    passport, 
-    email => users.find(user => user.email === email),
-    id => users.find(user => user.id === id)
-)
-
-const users = []
-// for connecting to the database
 const { Pool } = require('pg')
-const pool = new Pool({ database: 'onlookers_app'})
+const pool = new Pool ({ database: 'onlookers_app' })
+
+
 
 // configurations
 app.set('view engine', 'ejs')
@@ -48,75 +40,72 @@ app.use(logger);
 app.use(express.urlencoded({ extended: false}))
 app.use(flash())
 app.use(session({
-    secret: process.env.SESSION_SECRET,
+    secret: process.env.SESSION_SECRET, // enable session
     resave: false, // if nothing is changed in session value, don't save anything
     saveUnitialized: false // if the session value is empty, don't save
 }))
-app.use(passport.initialize()) // set the basics
-app.use(passport.session())
+
 app.use(methodOverride('_method'))
 
-// checkAuthenticated checks if user is logged in, if no, redirect to login page
-app.get('/',checkAuthenticated, (req, res) => {
-    
-    res.render('index', { name: req.user.name });
+
+app.get('/', (req, res) => {
+    pool.query('SELECT * from users where id=$1;', [session.id], (err, dbres) => {
+        let username = dbres.rows[0].username
+        res.render('index', { username: username });
+    })
 })
 
-// checkNotAuthenticated => if user already logged in, dont take them to login page again. instead, redirect to home page. 
-app.get('/login', checkNotAuthenticated, (req, res) => {
+
+
+app.get('/login', (req, res) => {
     res.render('login')
 })
 
-app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
-    successRedirect: '/',
-    failureRedirect: '/login',
-    failureFlash: true // display the error message
-}))
+app.post('/login', (req, res) => {
+    pool.query('SELECT * from users where email=$1', [req.body.email], (err, dbres) => {
+        let hashedPassword = dbres.rows[0].password
+        bcrypt.compare(req.body.password, hashedPassword, (err, result) => {
+            if(result == true) {
+                let user_id = dbres.rows[0].id
+                console.log(user_id)
+                session.id = user_id
+                res.redirect('/')
+            } else {
+                res.redirect('/login')
+            }
+        })
+    })
+
+})
     
-app.get('/register', checkNotAuthenticated, (req, res) => {
+app.get('/register', (req, res) => {
     res.render('register.ejs') 
 })
 
-app.post('/register', checkNotAuthenticated, async (req, res) => {
+app.post('/register', async (req, res) => {
 
     try {
-        const hashedPassword = await bcrypt.hash(req.body.password, 10)
-        users.push({
-            id: Date.now().toString(),
-            name: req.body.name,
-            email: req.body.email,
-            password: hashedPassword
-        })
-        res.redirect('/login')
+        let hashedPassword = await bcrypt.hash(req.body.password, 10)
+        pool.query('INSERT INTO users(username, email, password) VALUES($1, $2, $3)', [req.body.username, req.body.email, hashedPassword], (err, dbres) => {
+        
+            console.log('success');
+            res.redirect('/login')
+        }) 
     } catch {
         res.redirect('/register')
     }
-    console.log(users)
+    
 })
 
 
-app.delete('/logout', (req, res) => {
-    req.logOut() // inbuilt fuction in passport - will clear the session automatically
-    res.redirect('/login')
-})
 
 
-// to check if user is logged in?
-function checkAuthenticated(req, res, next) {
-    if (req.isAuthenticated()) {
-        return next()
-    }
+// app.delete('/logout', (req, res) => {
+//     req.logOut() // inbuilt fuction in passport - will clear the session automatically
+//     res.redirect('/login')
+// })
 
-    res.redirect('/login')
-}
 
-function checkNotAuthenticated(req, res, next) {
-    if (req.isAuthenticated()) {
-        return res.redirect('/')
-    }
-    next()
-
-}
 
 app.get('/reports/new', (req, res) => {
     res.render('new_report')
