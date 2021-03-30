@@ -1,9 +1,8 @@
 <h1>Login</h1>
- <!-- render the error messages  -->
 <% if(messages.error) { %> 
     <%= messages.error %>
 <% } %> 
-<form action="/login" method="POST">
+<form action="/sessions" method="POST">
 
     <div>
         <label for="email">Email</label>
