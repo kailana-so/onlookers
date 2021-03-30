@@ -1,20 +1,22 @@
 // load all the enviroment variables and set them inside process.env
-if (process.env.NODE_ENV !== 'production') {
-    require('dotenv').config()
-}
+// if (process.env.NODE_ENV !== 'production') {
+//     require('dotenv').config()
+// }
 
 const express = require('express');
 const app = express();
 const port = 8080;
 const logger = require('./middlewares/logger.js');
 const appControllers = require('./controllers/appControllers.js');
-const bcrypt = require('bcrypt')
+const sessionControllers = require('./controllers/sessionControllers.js');
+const userControllers = require('./controllers/userControllers.js');
 const flash = require('express-flash')
 const session = require('express-session')
 const methodOverride = require('method-override')
 
 const { Pool } = require('pg')
 const pool = new Pool ({ database: 'onlookers_app' })
+
 
 
 
@@ -40,7 +42,7 @@ app.use(logger);
 app.use(express.urlencoded({ extended: false}))
 app.use(flash())
 app.use(session({
-    secret: process.env.SESSION_SECRET, // enable session
+    secret: 'apple', // enable session
     resave: false, // if nothing is changed in session value, don't save anything
     saveUnitialized: false // if the session value is empty, don't save
 }))
@@ -48,64 +50,17 @@ app.use(session({
 app.use(methodOverride('_method'))
 
 
-app.get('/', (req, res) => {
-    pool.query('SELECT * from users where id=$1;', [session.id], (err, dbres) => {
-        let username = dbres.rows[0].username
-        res.render('index', { username: username });
-    })
-})
+app.get('/', appControllers.handleIndex)
 
+app.get('/login', sessionControllers.newLoginForm)
 
-
-app.get('/login', (req, res) => {
-    res.render('login')
-})
-
-app.post('/login', (req, res) => {
-    pool.query('SELECT * from users where email=$1', [req.body.email], (err, dbres) => {
-        let hashedPassword = dbres.rows[0].password
-        bcrypt.compare(req.body.password, hashedPassword, (err, result) => {
-            if(result == true) {
-                let user_id = dbres.rows[0].id
-                console.log(user_id)
-                session.id = user_id
-                res.redirect('/')
-            } else {
-                res.redirect('/login')
-            }
-        })
-    })
-
-})
+app.post('/sessions', sessionControllers.login)
     
-app.get('/register', (req, res) => {
-    res.render('register.ejs') 
-})
+app.get('/register', userControllers.newUser)
 
-app.post('/register', async (req, res) => {
+app.post('/register', userControllers.createUser)
 
-    try {
-        let hashedPassword = await bcrypt.hash(req.body.password, 10)
-        pool.query('INSERT INTO users(username, email, password) VALUES($1, $2, $3)', [req.body.username, req.body.email, hashedPassword], (err, dbres) => {
-        
-            console.log('success');
-            res.redirect('/login')
-        }) 
-    } catch {
-        res.redirect('/register')
-    }
-    
-})
-
-
-
-
-// app.delete('/logout', (req, res) => {
-//     req.logOut() // inbuilt fuction in passport - will clear the session automatically
-//     res.redirect('/login')
-// })
-
-
+app.delete('/sessions', sessionControllers.logout)
 
 app.get('/reports/new', (req, res) => {
     res.render('new_report')
