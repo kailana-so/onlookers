@@ -1,4 +1,5 @@
 const bcrypt = require('bcrypt')
+const { Pool } = require('pg')
 
 let pool;
     if (process.env.PRODUCTION) {

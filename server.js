@@ -9,6 +9,8 @@ const log_entriesController = require('./controllers/log_entriesController');
 const session = require('express-session')
 const methodOverride = require('method-override')
 
+const { Pool } = require('pg')
+
 let pool;
     if (process.env.PRODUCTION) {
     pool = new Pool({

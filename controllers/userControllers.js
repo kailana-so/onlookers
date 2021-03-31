@@ -1,4 +1,5 @@
 const bcrypt = require('bcrypt')
+const { Pool } = require('pg')
 
 let pool;
     if (process.env.PRODUCTION) {
@@ -10,6 +11,7 @@ let pool;
         database: 'onlookers_app'
     })
 }
+
 
 function newUser(req, res) {
     res.render('register.ejs') 
