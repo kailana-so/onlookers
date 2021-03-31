@@ -91,3 +91,12 @@ app.get('/reporting/:id', (req, res) => {
 app.post('/api/reports/:id/logs', log_entriesController.create)
 
 app.get('/api/reports/:id/logs', log_entriesController.read)
+
+
+
+// render the reports page 
+app.get('/reporting/:id/report', (req, res) => {
+    res.render('report-template')
+})
+
+// get everything for the reports
