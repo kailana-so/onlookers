@@ -25,6 +25,12 @@ body {
     padding: 2.5%;
 }
 
-.media-btns button {
+.media-btns button, .end-report-btn {
     border-radius: 15px;
+}
+
+.container .btn {
+    display: flex;
+    justify-content: space-around;
+    margin: 5% 2%;
 }
