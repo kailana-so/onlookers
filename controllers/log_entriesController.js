@@ -13,10 +13,14 @@ let pool;
 
 
 function create(req, res) {
-    console.log( { content: req.body.content } )
-    res.json({ message: 'success' })
+    pool.query('INSERT INTO log_entries(report_id, content) VALUES($1, $2)', [req.params.id, req.body.content], (err, dbres) => {
+         
+            res.json({ message: 'success' })
+        
+        })
+        console.log( { content: req.params.id } )
 }
-
+    
 function read(req, res) {
     res.json({ message: "to do"})
 }

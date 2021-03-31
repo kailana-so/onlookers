@@ -1,9 +1,5 @@
 const bcrypt = require('bcrypt')
 const { Pool } = require('pg')
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
 let pool;
     if (process.env.PRODUCTION) {
     pool = new Pool({
@@ -14,10 +10,6 @@ let pool;
         database: 'onlookers_app'
     })
 }
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
 
 function newUser(req, res) {
     res.render('register.ejs') 
