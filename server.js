@@ -13,8 +13,6 @@ const { Pool } = require('pg')
 const pool = new Pool ({ database: 'onlookers_app' })
 
 
-
-
 // configurations
 app.set('view engine', 'ejs')
 app.set('views', './views')
