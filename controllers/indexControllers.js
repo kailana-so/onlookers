@@ -12,7 +12,6 @@ function loggedIn(req) {
 }
 
 
-
 function handleIndex (req, res) {
     if(loggedIn(req)) {
         pool.query('SELECT * from users where id=$1;', [req.session.userId], (err, dbres) => {
@@ -23,7 +22,6 @@ function handleIndex (req, res) {
         res.redirect('/login')
     }
 }
-
 
 
 // function register 

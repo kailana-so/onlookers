@@ -3,10 +3,6 @@ const bcrypt = require('bcrypt')
 const { Pool } = require('pg')
 const pool = new Pool ({ database: 'onlookers_app' })
 
-
-
-
-
 function newUser(req, res) {
     res.render('register.ejs') 
 }
