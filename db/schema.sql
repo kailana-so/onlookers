@@ -2,12 +2,16 @@ CREATE DATABASE onlookers_app;
 
 -- connect to the db! thanks emil!
 
+DROP TABLE reports;
+DROP TABLE users;
 DROP TABLE log_entries;
 
 CREATE TABLE reports (
     id SERIAL PRIMARY KEY,
     report_name TEXT,
-    date TEXT
+    date TEXT,
+    user_id INT,
+    CONSTRAINT fk_users FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
 CREATE TABLE users (

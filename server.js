@@ -1,8 +1,3 @@
-// load all the enviroment variables and set them inside process.env
-// if (process.env.NODE_ENV !== 'production') {
-//     require('dotenv').config()
-// }
-
 const express = require('express');
 const app = express();
 const port = 8080;
@@ -10,7 +5,6 @@ const logger = require('./middlewares/logger.js');
 const indexControllers = require('./controllers/indexControllers.js');
 const sessionControllers = require('./controllers/sessionControllers.js');
 const userControllers = require('./controllers/userControllers.js');
-const flash = require('express-flash')
 const session = require('express-session')
 const methodOverride = require('method-override')
 
@@ -40,7 +34,6 @@ app.use(logger);
 
 // take the input from the form to access them inside the post request - req.body.name/email/password 
 app.use(express.urlencoded({ extended: false}))
-app.use(flash())
 app.use(session({
     secret: 'apple', // enable session
     resave: false, // if nothing is changed in session value, don't save anything
