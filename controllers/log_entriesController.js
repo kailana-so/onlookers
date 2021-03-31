@@ -20,14 +20,6 @@ function create(req, res) {
         })
     console.log( { content: req.params.id } )
 }
-    
-function read(req, res) {
-    pool.query('SELECT * FROM log_entries;', [], (err, dbres) => {
-        
-        res.json(dbres.rows)
-        
-    }) 
-}
 
 module.exports = {
     create,
