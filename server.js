@@ -17,12 +17,17 @@ const pool = new Pool ({ database: 'onlookers_app' })
 // configurations
 app.set('view engine', 'ejs')
 app.set('views', './views')
+app.set
 
 //middleware for sending data in json format
 app.use(express.json());  
 
 //middleware for getting data from a form
 app.use(express.urlencoded())
+
+
+// public folders
+app.use(express.static('public'))
 
 // listening on port
 app.listen(port, () => {
@@ -68,6 +73,6 @@ app.post('/reports', (req, res) => {
 
 
 // create reports
-// app.get('/reporting', (req, res) => {
-//     res.render('reporting')
-// })
+app.get('/reporting', (req, res) => {
+    res.render('reporting')
+})
