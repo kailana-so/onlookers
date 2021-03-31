@@ -84,19 +84,28 @@ app.post('/reporting', (req, res) => {
     })
 })
 
-// rendering the page
+
+
+// rendering the reporting page
 app.get('/reporting/:id', (req, res) => {
     res.render('reporting')
 })
 
+// create a post
 app.post('/api/reports/:id/logs', log_entriesController.create)
 
+
+// read the db
 app.get('/api/reports', log_entriesController.read)
 
 
 
-// render the reports page 
-app.get('/reporting/:id/report', (req, res) => {
+// render the reports-template page 
+app.get('/report', (req, res) => {
+    res.render('report-template')
+})
+// reading the dbs
+app.get('/report', (req, res) => {
     res.render('report-template')
 })
 

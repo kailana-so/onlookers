@@ -21,6 +21,16 @@ function create(req, res) {
     console.log( { content: req.params.id } )
 }
 
+
+// I dont think we need this read function to retrieve the db on the app.js
+function read(req, res) {
+    pool.query('SELECT * FROM log_entries;', [], (err, dbres) => {
+        
+        res.json(dbres.rows)
+        
+    }) 
+}
+
 module.exports = {
     create,
     read

@@ -2,7 +2,6 @@ const reportForm = document.querySelector('.report-form')
 const currentLog = document.querySelector('#current-log')
 const contentHistory = document.querySelector('.content-history')
 
-
 function renderLogs(lastLog) { // this is the render function
     console.log(lastLog)
     return `
@@ -21,9 +20,10 @@ function createLog() {
     axios.post(`/api/reports/${reportId}/logs`, { content: currentLog.value } ).then(res => {
         console.log(res.data) 
 
-        //this is grabbbing the reports
+        // this is grabbbing the reports
         axios.get('/api/reports').then(res => {
             console.log(res.data)
+            console.log(reportId)
 
             contentHistory.innerHTML = renderLogs(res.data.pop())
             // this is grabbing the last log entry (rn only one user can use the app at a single time bc i cant figure out how to grab the last entry FROM a specifc report_id)
