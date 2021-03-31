@@ -6,6 +6,11 @@ function create(req, res) {
     res.json({ message: 'success' })
 }
 
+function read(req, res) {
+    res.json({ message: "to do"})
+}
+
 module.exports = {
-    create
+    create,
+    read
 }
