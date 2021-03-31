@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>reporting</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+</head>
+<body>
+    
+    <section class="container">
+
+        <section class="media-btns">
+            <button>
+                <span class="material-icons">
+                    photo_camera
+                </span>
+            </button>
+            <button>
+                <span class="material-icons">
+                    keyboard_voice
+                </span>
+            </button>
+        </section>
+    
+        <section class="content-history"></section>
+
+        <form class="report-form" action="">
+            <p class="time-para"></p>
+            <textarea name="content" id="content-input" rows="25"></textarea>
+            <button> + </button>
+        </form>
+
+    </section>
+    
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="app.js"></script>
+
+    
+    <script>
+
+        // form
+        // history
+        // auto time - set time out - every 5 mins make a axois call to sent to the db
+        // axios call auto
+        // dom api to make the form
+
+        function timeIs() {
+            var date = new Date();
+            var seconds = date.getSeconds();
+            var minutes = date.getMinutes();
+            var hours = date.getHours();
+            var timePara = document.querySelector('.time-para');
+            timePara.textContent = ("0" + hours).substr(-2) + ":" + ("0" + minutes).substr(-2) + ":" + ("0" + seconds).substr(-2);
+            }
+        
+        setInterval(timeIs, 1000);
+    </script>
+
+</body>
+</html>
