@@ -1,6 +1,13 @@
-const { Pool } = require('pg')
-
-const pool = new Pool ({ database: 'onlookers_app' })
+let pool;
+    if (process.env.PRODUCTION) {
+    pool = new Pool({
+        connectionString: process.env.DATABASE_URL,
+    })
+    } else {
+    pool = new Pool({
+        database: 'onlookers_app'
+    })
+}
 
 // read
 function index(req, res) {

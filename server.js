@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const port = 8080;
+const port = process.env.PORT || 3001;
 const logger = require('./middlewares/logger.js');
 const indexControllers = require('./controllers/indexControllers.js');
 const sessionControllers = require('./controllers/sessionControllers.js');
@@ -9,8 +9,16 @@ const log_entriesController = require('./controllers/log_entriesController');
 const session = require('express-session')
 const methodOverride = require('method-override')
 
-const { Pool } = require('pg')
-const pool = new Pool ({ database: 'onlookers_app' })
+let pool;
+    if (process.env.PRODUCTION) {
+    pool = new Pool({
+        connectionString: process.env.DATABASE_URL,
+    })
+    } else {
+    pool = new Pool({
+        database: 'onlookers_app'
+    })
+}
 
 
 // configurations
