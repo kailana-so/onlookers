@@ -18,11 +18,15 @@ function create(req, res) {
             res.json({ message: 'success' })
         
         })
-        console.log( { content: req.params.id } )
+    console.log( { content: req.params.id } )
 }
     
 function read(req, res) {
-    res.json({ message: "to do"})
+    pool.query('SELECT * FROM log_entries;', [], (err, dbres) => {
+        
+        res.json(dbres.rows)
+        
+    }) 
 }
 
 module.exports = {

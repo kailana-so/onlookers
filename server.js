@@ -90,7 +90,7 @@ app.get('/reporting/:id', (req, res) => {
 
 app.post('/api/reports/:id/logs', log_entriesController.create)
 
-app.get('/api/reports/:id/logs', log_entriesController.read)
+app.get('/api/reports', log_entriesController.read)
 
 
 
