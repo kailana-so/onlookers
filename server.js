@@ -5,6 +5,7 @@ const logger = require('./middlewares/logger.js');
 const indexControllers = require('./controllers/indexControllers.js');
 const sessionControllers = require('./controllers/sessionControllers.js');
 const userControllers = require('./controllers/userControllers.js');
+const log_entriesController = require('./controllers/log_entriesController');
 const session = require('express-session')
 const methodOverride = require('method-override')
 
@@ -76,3 +77,5 @@ app.post('/reports', (req, res) => {
 app.get('/reporting', (req, res) => {
     res.render('reporting')
 })
+
+app.post('/api/logs', log_entriesController.create)
