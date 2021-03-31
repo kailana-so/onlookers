@@ -100,3 +100,8 @@ app.get('/reporting/:id/report', (req, res) => {
 })
 
 // get everything for the reports
+
+
+app.get('/camera/:id', (req, res) => {
+    res.render('camera')
+})

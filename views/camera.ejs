@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <video id="video" width="360" height="270" autoplay></video>
+    <button id="snap">Take Photo</button>
+    <canvas id="canvas" width="360" height="270"></canvas>
+    <script src="/public/camera.js"></script>
+
+    <script>
+
+        let canvas = document.querySelector('#canvas');
+        let context = canvas.getContext('2d');
+        let video = document.querySelector('#video');
+
+
+        if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+            navigator.mediaDevices.getUserMedia({video: true, sound: true}).then(stream => {
+                video.srcObject = stream;
+                video.play();
+            });
+        }
+
+        document.getElementById('snap').addEventListener('click', () => {
+            context.drawImage(video, 0,0,360, 270);
+        });
+    </script>
+</body>
+</html>
