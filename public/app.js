@@ -19,10 +19,12 @@ function createLog() {
 
     axios.post(`/api/reports/${reportId}/logs`, { content: currentLog.value } ).then(res => {
         console.log(res.data) 
+        // console.log(currentLog.value)
 
         // this is grabbbing the reports
         axios.get('/api/reports').then(res => {
-            console.log(res.data)
+            // console.log(res.data)
+            // console.log(res.data.pop())
             console.log(reportId)
 
             contentHistory.innerHTML = renderLogs(res.data.pop())
@@ -36,10 +38,10 @@ function createLog() {
 function handleSubmit(e) {
     e.preventDefault()
     clearInterval(currentTimer)
-    currentTimer = setInterval(createLog, 60 * 10000)
+    currentTimer = setInterval(createLog, 10000)
     createLog()
 
 }
 
 reportForm.addEventListener('submit', handleSubmit)
-currentTimer = setInterval(createLog, 60 * 10000)
+currentTimer = setInterval(createLog, 10000)
