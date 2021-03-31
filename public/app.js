@@ -1,10 +1,10 @@
-const reportForm = document.querySelector('.report-form');
+const reportForm = document.querySelector('.report-form')
 const currentLog = document.querySelector('#current-log')
 
 function createLog() {
-    axios.post('/api/logs', { content: currentLog.value } ).then(res => {
-        console.log(res) 
-    })
+    // axios.post('/api/logs', { content: currentLog.value } ).then(res => {
+    //     console.log(res) 
+    // })
     currentLog.value = ''
 }
 

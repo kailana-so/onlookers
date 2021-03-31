@@ -67,16 +67,17 @@ app.get('/reports/new', (req, res) => {
 // create reports
 app.post('/reporting', (req, res) => {
     timeStamp = new Date();
-    pool.query('INSERT INTO reports(report_name, date) VALUES ($1, $2) returning *', [req.body.report_name, timeStamp], (err, dbres) => {
+    pool.query('INSERT INTO reports(report_name, date) VALUES ($1, $2) returning id', [req.body.report_name, timeStamp], (err, dbres) => {
     
-        res.redirect('/reporting')
+        res.redirect(`/reporting/${dbres.rows[0].id}`)
         
     })
 })
 
-app.get('/reporting', (req, res) => {
-
+app.get('/reporting/:id', (req, res) => {
     res.render('reporting')
 })
 
-app.post('/api/logs', log_entriesController.create)
+app.post('/api/reports/:id/logs', log_entriesController.create)
+
+app.get('/api/reports/:id/logs', log_entriesController.read)
