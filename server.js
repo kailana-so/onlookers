@@ -84,7 +84,9 @@ app.post('/reporting', (req, res) => {
     })
 })
 
-// rendering the page
+
+
+// rendering the reporting page
 app.get('/reporting/:id', (req, res) => {
     res.render('reporting')
 })
@@ -95,9 +97,9 @@ app.get('/api/reports', log_entriesController.read)
 
 
 
-// render the reports page 
-app.get('/reporting/:id/report', (req, res) => {
-    res.render('report-template')
-})
+// render the reports-template page 
+// app.get('/report', (req, res) => {
+//     res.render('report-template')
+// })
 
 // get everything for the reports
