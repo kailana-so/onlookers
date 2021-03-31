@@ -8,9 +8,29 @@
     <link rel="stylesheet" href="/stylesheets/login.css">
 </head>
 <body>
-    <h1>hello <%= username %> </h1>
+    <h1>Onlookers</h1>
+    <h2>Reporting as <%= username %> </h2>
     <form action="/sessions?_method=DELETE" method="POST">
         <button type="submit">Log Out</button>
     </form>
+    <br><br>
+    <form action="/reporting" method="post">
+        <label for="report_name">Report Name</label>
+        <input type="text" name="report_name"> <br><br>
+        <label for="date">Date</label>
+        <p id="date"></p>
+        <button>Begin Reporting</button>
+    </form>
+
+    <script>
+        currentDate =  new Date();
+        currentYear = currentDate.getFullYear();
+        currentMonth = currentDate.getMonth() + 1;
+        currentDay = currentDate.getDate();
+        document.getElementById("date").innerHTML = currentDay + "/" + currentMonth + "/" + currentYear;
+    </script>
+
+
+
 </body>
 </html>

@@ -63,16 +63,19 @@ app.get('/reports/new', (req, res) => {
     res.render('new_report')
 })
 
-app.post('/reports', (req, res) => {
+
+// create reports
+app.post('/reporting', (req, res) => {
     timeStamp = new Date();
-    pool.query('INSERT INTO reports(report_name, date) VALUES ($1, $2) returning *', [req.body.report_name, timeStamp], (err, res) => {
-        console.log('success! data entered')
+    pool.query('INSERT INTO reports(report_name, date) VALUES ($1, $2) returning *', [req.body.report_name, timeStamp], (err, dbres) => {
+    
+        res.redirect('/reporting')
+        
     })
 })
 
-
-// create reports
 app.get('/reporting', (req, res) => {
+
     res.render('reporting')
 })
 
