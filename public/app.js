@@ -27,3 +27,6 @@ currentTimer = setInterval(createLog, 10000)
 //     <div class='content'>${content}</div>
 // </article>
 // `
+axios.get('/api/reports').then(res => {
+    console.log(res.data)
+})
