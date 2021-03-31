@@ -84,6 +84,7 @@ app.post('/reporting', (req, res) => {
     })
 })
 
+// rendering the page
 app.get('/reporting/:id', (req, res) => {
     res.render('reporting')
 })

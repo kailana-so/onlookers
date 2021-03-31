@@ -2,6 +2,13 @@ body {
     font-family: Arial, Helvetica, sans-serif;
 }
 
+.content-history {
+    height: 100px;
+    border: 1px solid gray;
+    overflow: scroll;
+    padding: 2%;
+}
+
 .container .media-btns {
     display: flex;
     justify-content: space-around;
