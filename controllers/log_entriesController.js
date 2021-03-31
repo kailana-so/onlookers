@@ -11,6 +11,7 @@ let pool;
     })
 }
 
+
 function create(req, res) {
     console.log( { content: req.body.content } )
     res.json({ message: 'success' })

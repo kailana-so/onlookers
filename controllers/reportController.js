@@ -1,5 +1,4 @@
 const { Pool } = require('pg')
-
 let pool;
     if (process.env.PRODUCTION) {
     pool = new Pool({
@@ -10,6 +9,7 @@ let pool;
         database: 'onlookers_app'
     })
 }
+
 
 // read
 function index(req, res) {
