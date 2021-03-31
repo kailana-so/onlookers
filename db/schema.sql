@@ -21,7 +21,7 @@ CREATE TABLE log_entries (
     id SERIAL PRIMARY KEY,
     report_id INT,
     content TEXT,
-    timestamp  TIMESTAMPTZ,
+    timestamp TIMESTAMPTZ DEFAULT now(),
     longitude TEXT NOT NULL,
     latitude TEXT NOT NULL,
     CONSTRAINT fk_report FOREIGN KEY (report_id) REFERENCES reports(id) ON DELETE CASCADE

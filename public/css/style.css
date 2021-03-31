@@ -1,0 +1,23 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.container .media-btns {
+    display: flex;
+    justify-content: space-around;
+    margin: 5% 2%;
+
+}
+
+.container form {
+    display: flex;
+    flex-direction: column;
+}
+.container button {
+    margin: 5% 0;
+    padding: 2.5%;
+}
+
+.media-btns button {
+    border-radius: 15px;
+}

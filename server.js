@@ -7,7 +7,7 @@ const express = require('express');
 const app = express();
 const port = 8080;
 const logger = require('./middlewares/logger.js');
-const appControllers = require('./controllers/indexControllers.js');
+const indexControllers = require('./controllers/indexControllers.js');
 const sessionControllers = require('./controllers/sessionControllers.js');
 const userControllers = require('./controllers/userControllers.js');
 const flash = require('express-flash')
@@ -50,7 +50,7 @@ app.use(session({
 app.use(methodOverride('_method'))
 
 
-app.get('/', appControllers.handleIndex)
+app.get('/', indexControllers.handleIndex)
 
 app.get('/login', sessionControllers.newLoginForm)
 
@@ -72,3 +72,9 @@ app.post('/reports', (req, res) => {
         console.log('success! data entered')
     })
 })
+
+
+// create reports
+// app.get('/reporting', (req, res) => {
+//     res.render('reporting')
+// })
