@@ -21,7 +21,7 @@ app.set('views', './views')
 app.use(express.json());  
 
 //middleware for getting data from a form
-app.use(express.urlencoded())
+app.use(express.urlencoded({ extended: false }))
 
 
 // public folders
@@ -40,7 +40,7 @@ app.use(express.urlencoded({ extended: false}))
 app.use(session({
     secret: 'apple', // enable session
     resave: false, // if nothing is changed in session value, don't save anything
-    saveUnitialized: false // if the session value is empty, don't save
+    saveUninitialized: false // if the session value is empty, don't save
 }))
 
 app.use(methodOverride('_method'))
