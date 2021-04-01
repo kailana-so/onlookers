@@ -10,9 +10,12 @@ function newLoginForm(req, res) {
 
 
 function login(req, res) {
-    runSql('SELECT * from users where email=$1', [req.body.email], dbres => {
+    // runSql('SELECT * from users where email=$1', [req.body.email], dbres => {
+    runSql('SELECT * from users where email=$1', ['test'], dbres => {
         let hashedPassword = dbres.rows[0].password
-        bcrypt.compare(req.body.password, hashedPassword, (err, result) => {
+        // bcrypt.compare(req.body.password, hashedPassword, (err, result) => {
+        bcrypt.compare('test', hashedPassword, (err, result) => {
+
             if(result == true) {
                 let user_id = dbres.rows[0].id
                 console.log(user_id)
