@@ -1,5 +1,31 @@
 body {
     font-family: Arial, Helvetica, sans-serif;
+    color: gray;
+    background-color:whitesmoke;
+    margin: 2%;
+}
+.header {
+    width: 100%;
+    height: 80px;
+    color: white;
+    padding-top: 2%;
+    background-color:rgba(255, 132, 0, 0.872);
+}
+
+.user {
+    color: black;
+}
+
+h1 {
+    padding: 0 2%;
+}
+
+h2 {
+    color: rgb(36, 35, 35);
+}
+
+a {
+    text-decoration: none;
 }
 
 .content-history {
@@ -33,4 +59,26 @@ body {
     display: flex;
     justify-content: space-around;
     margin: 5% 2%;
+}
+
+input {
+    width: 96%;
+    height: 30px;
+    background-color: rgba(159, 159, 159, 0.475);
+    border-radius: 5px;
+    border-style: none;
+}
+
+.user-btns {
+    width: 98%;
+    margin: 5% 0;
+    padding: 2.5%;
+    /* background-color: #f09b1ad6; */
+    /* border-radius: 5px; */
+    
+}
+
+.user-btns:hover, .media-btns button:hover, .end-report-btn:hover {
+    background-color: rgba(255, 132, 0, 0.872);
+
 }

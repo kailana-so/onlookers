@@ -5,9 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>report</title>
+    <link rel="stylesheet" href="/css/style.css">
+
 </head>
 <body>
 
+    <section class="report">
+
+    </section>
     <!-- from reports table -->
     <!-- report name -->
     <!-- date -->
@@ -23,10 +28,57 @@
 
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script>
+
+        const report = document.querySelector(".report")
+
         let path = window.location.pathname
         let reportId = Number(path.split('/')[2])
         console.log(reportId)
-        axios.get(`/api/reports/${reportId}`)
+
+
+        // render report
+        function renderReport(report) { // this is the render function
+        // console.log(reportContent)
+        if (report != "") {
+            // console.log(reportContent)
+            return report
+            }
+        }
+
+        function renderReports(logEntries) { //this is taking the data response fomr the axios get call
+            console.log(logEntries)
+            
+            return `
+                <section>
+                    <header>
+                        <h4> ${logEntries[0].id}</h4>
+                        <h4> ${logEntries[0].report_name}</h4>
+                        <h4> ${logEntries[0].date}</h4>
+                    </header>
+                    <main>
+                        ${logEntries.map(logEntry => {
+                            return `
+                                <article>
+                                    <sub> ${renderReport(logEntry.timestamp)}</sub>
+                                    <p> ${renderReport(logEntry.content)}</p>
+                                </article>
+                            `
+                        }).join('')}
+                    </main>
+                </section>
+            `
+        }
+
+        // grab the report
+        axios.get(`/api/reports/${reportId}`).then(res => {
+        // console.log(res.data) 
+
+            report.innerHTML = renderReports(res.data)
+ 
+
+        })
+
+        // grab data for template
 
     </script>
 </body>
