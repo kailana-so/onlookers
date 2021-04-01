@@ -8,8 +8,10 @@
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-    <h1>Onlookers</h1>
-    <h2>Reporting as <%= username %> </h2>
+    <div class="header">
+        <h1>Onl👀kers</h1>
+    </div>
+    <p>Reporting as <span class="user"><%= username %></span> </p>
     <form action="/sessions?_method=DELETE" method="POST">
         <button type="submit">Log Out</button>
     </form>
@@ -19,8 +21,11 @@
         <input type="text" name="report_name"> <br><br>
         <label for="date">Date</label>
         <p id="date"></p>
-        <button>Begin Reporting</button>
+        <button class="user-btns">Begin Reporting</button>
     </form>
+    <sub>
+        ** Note: Reports cannot be modified after submission and a copy will be available for download as PDF.
+    </sub>
 
     <script>
         currentDate =  new Date();
