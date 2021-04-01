@@ -1,20 +1,11 @@
-const { Pool } = require('pg')
-let pool;
-    if (process.env.PRODUCTION) {
-    pool = new Pool({
-        connectionString: process.env.DATABASE_URL,
-    })
-    } else {
-    pool = new Pool({
-        database: 'onlookers_app'
-    })
-}
+const runSql = require('../db/db');
+
 
 
 // read
 function index(req, res) {
 
-    pool.query('SELECT * FROM log_entries;', [], (err, db) => {
+    runSql('SELECT * FROM log_entries;', [], db => {
 
         res.json(log_entries)
         res.json(db.rows)
@@ -24,15 +15,16 @@ function index(req, res) {
 // create 
 function create(req, res) {
 
-    pool.query(
+    runSql(
         'INSERT INTO log_entries (content) VALUES ($1) returning * ',
         [req.body.content],
-        (err, db) => {
+        db => {
             res.json({ 
                 message: 'success', 
                 log_entries: db.rows[0]
             })
-        })
+        }
+    )    
 }
 
 
