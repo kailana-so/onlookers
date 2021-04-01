@@ -77,7 +77,7 @@ app.get('/reports/new', (req, res) => {
 // create reports
 app.post('/reporting', (req, res) => {
     timeStamp = new Date();
-    pool.query('INSERT INTO reports(report_name, date) VALUES ($1, $2) returning id', [req.body.report_name, timeStamp], (err, dbres) => {
+    pool.query('INSERT INTO reports(report_name, date, user_id) VALUES ($1, $2, $3) returning id', [req.body.report_name, timeStamp, req.session.userId], (err, dbres) => {
     
         res.redirect(`/reporting/${dbres.rows[0].id}`)
         
