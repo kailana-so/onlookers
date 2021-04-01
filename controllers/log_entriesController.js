@@ -22,9 +22,10 @@ function create(req, res) {
 }
 
 
-// I dont think we need this read function to retrieve the db on the app.js
+// 
 function read(req, res) {
-    pool.query('SELECT * FROM log_entries;', [], (err, dbres) => {
+    // SELECT * FROM log_entries join reports ON (log_entries.report_id = reports.id) WHERE report_id = $1 order by timestamp asc;
+    pool.query('SELECT * FROM log_entries join reports ON (log_entries.report_id = reports.id) WHERE report_id = $1 order by timestamp asc;', [req.params.id], (err, dbres) => {
         
         res.json(dbres.rows)
         

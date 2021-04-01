@@ -22,7 +22,7 @@ function createLog() {
         // console.log(currentLog.value)
 
         // this is grabbbing the reports
-        axios.get('/api/reports').then(res => {
+        axios.get(`/api/reports/${reportId}`).then(res => {
             // console.log(res.data)
             // console.log(res.data.pop())
             console.log(reportId)
