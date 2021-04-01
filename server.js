@@ -9,25 +9,13 @@ const log_entriesController = require('./controllers/log_entriesController.js');
 
 const session = require('express-session')
 const methodOverride = require('method-override')
+const runSql = require('./db/db')
 
-const { Pool } = require('pg')
-
-let pool;
-    if (process.env.PRODUCTION) {
-    pool = new Pool({
-        connectionString: process.env.DATABASE_URL,
-    })
-    } else {
-    pool = new Pool({
-        database: 'onlookers_app'
-    })
-}
 
 
 // configurations
 app.set('view engine', 'ejs')
 app.set('views', './views')
-app.set
 
 //middleware for sending data in json format
 app.use(express.json());  
@@ -77,7 +65,7 @@ app.get('/reports/new', (req, res) => {
 // create reports
 app.post('/reporting', (req, res) => {
     timeStamp = new Date();
-    pool.query('INSERT INTO reports(report_name, date, user_id) VALUES ($1, $2, $3) returning id', [req.body.report_name, timeStamp, req.session.userId], (err, dbres) => {
+    runSql('INSERT INTO reports(report_name, date, user_id) VALUES ($1, $2, $3) returning id', [req.body.report_name, timeStamp, req.session.userId], dbres => {
     
         res.redirect(`/reporting/${dbres.rows[0].id}`)
         

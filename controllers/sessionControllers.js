@@ -1,16 +1,6 @@
 const bcrypt = require('bcrypt')
-const { Pool } = require('pg')
+const runSql = require('../db/db');
 
-let pool;
-    if (process.env.PRODUCTION) {
-    pool = new Pool({
-        connectionString: process.env.DATABASE_URL,
-    })
-    } else {
-    pool = new Pool({
-        database: 'onlookers_app'
-    })
-}
 
 
 
@@ -20,7 +10,7 @@ function newLoginForm(req, res) {
 
 
 function login(req, res) {
-    pool.query('SELECT * from users where email=$1', [req.body.email], (err, dbres) => {
+    runSql('SELECT * from users where email=$1', [req.body.email], dbres => {
         let hashedPassword = dbres.rows[0].password
         bcrypt.compare(req.body.password, hashedPassword, (err, result) => {
             if(result == true) {

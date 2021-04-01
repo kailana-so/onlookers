@@ -1,16 +1,7 @@
 const bcrypt = require('bcrypt')
-const { Pool } = require('pg')
+const runSql = require('../db/db');
 
-let pool;
-    if (process.env.PRODUCTION) {
-    pool = new Pool({
-        connectionString: process.env.DATABASE_URL,
-    })
-    } else {
-    pool = new Pool({
-        database: 'onlookers_app'
-    })
-}
+
 
 function loggedIn(req) {
     if(req.session.userId) {
@@ -23,7 +14,7 @@ function loggedIn(req) {
 
 function handleIndex (req, res) {
     if(loggedIn(req)) {
-        pool.query('SELECT * from users where id=$1;', [req.session.userId], (err, dbres) => {
+        runSql('SELECT * from users where id=$1;', [req.session.userId], dbres => {
             let username = dbres.rows[0].username
             res.render('index', { username: username });
         })
