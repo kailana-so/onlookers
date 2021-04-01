@@ -20,5 +20,16 @@
 
     <!-- content -->
     
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        let path = window.location.pathname
+        let reportId = Number(path.split('/')[2])
+        console.log(reportId)
+        axios.get(`/api/reports/${reportId}`)
+
+    </script>
 </body>
+
+
 </html>

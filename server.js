@@ -5,7 +5,8 @@ const logger = require('./middlewares/logger.js');
 const indexControllers = require('./controllers/indexControllers.js');
 const sessionControllers = require('./controllers/sessionControllers.js');
 const userControllers = require('./controllers/userControllers.js');
-const log_entriesController = require('./controllers/log_entriesController');
+const log_entriesController = require('./controllers/log_entriesController.js');
+
 const session = require('express-session')
 const methodOverride = require('method-override')
 
@@ -73,7 +74,6 @@ app.get('/reports/new', (req, res) => {
     res.render('new_report')
 })
 
-
 // create reports
 app.post('/reporting', (req, res) => {
     timeStamp = new Date();
@@ -85,28 +85,20 @@ app.post('/reporting', (req, res) => {
 })
 
 
+// render the reports-template page 
+app.get('/report/:id/pdf', (req, res) => {
+    res.render('report-template')
+
+})
 
 // rendering the reporting page
 app.get('/reporting/:id', (req, res) => {
-    res.render('reporting')
+    res.render('reporting', req.params)
 })
 
 // create a post
 app.post('/api/reports/:id/logs', log_entriesController.create)
 
 
-// read the db
-app.get('/api/reports', log_entriesController.read)
-
-
-
-// render the reports-template page 
-app.get('/report', (req, res) => {
-    res.render('report-template')
-})
-// reading the dbs
-app.get('/report', (req, res) => {
-    res.render('report-template')
-})
-
-// get everything for the reports
+// read the db on the spa page
+app.get('/api/reports/:id', log_entriesController.read)
