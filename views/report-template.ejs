@@ -50,10 +50,10 @@
             
             return `
                 <section>
-                    <header>
-                        <h4> ${logEntries[0].id}</h4>
-                        <h4> ${logEntries[0].report_name}</h4>
-                        <h4> ${logEntries[0].date}</h4>
+                    <header class="report-header">
+                        <h4> <span class="title"> Report id: </span>${logEntries[0].id}</h4>
+                        <h4> <span class="title"> Report name: </span>${logEntries[0].report_name}</h4>
+                        <h4> <span class="title"> Report date: </span>${logEntries[0].date}</h4>
                     </header>
                     <main>
                         ${logEntries.map(logEntry => {
